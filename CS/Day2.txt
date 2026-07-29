@@ -1,0 +1,138 @@
+Q1. What is an Operating System (OS)? Explain its role in a computer system.
+
+An Operating System is system software that acts as an interface between users, application programs, and computer hardware. It manages hardware resources such as CPU, memory, storage, and I/O devices, and provides services required for applications to execute efficiently. Therefore, it is called the resource manager of a computer system.
+
+
+Q2. Why do we need an Operating System? What problems would occur if there was no OS?
+
+We need an Operating System to manage computer resources such as CPU, memory, storage, and I/O devices efficiently. Without an OS, users would have to interact directly with hardware using machine-level instructions, making the system difficult to use and inefficient. There would be no process management, scheduling, memory protection, security, or hardware abstraction. The CPU utilization would be poor because there would be no mechanism to manage multiple tasks and handle I/O efficiently.
+
+
+Q3.What is the difference between System Software and Application Software?
+ Application software is software designed to perform specific tasks for users. It runs in User Mode and communicates with the Operating System through system calls to request services such as file access, memory allocation, and device access. Examples include VS Code, Spotify, and browsers.
+
+System software manages and controls computer hardware and provides a platform for application software. The Operating System kernel runs in Kernel Mode and manages resources through process management, memory management, and CPU scheduling. Other examples of system software include device drivers, firmware, and utility programs.
+
+Q4.You said "OS manages hardware". Explain exactly how an OS manages
+The OS manages hardware resources by acting as a resource manager. It manages CPU through scheduling and context switching, ensuring efficient execution of multiple processes. It manages memory by allocating and deallocating RAM, providing virtual memory and memory protection. It manages storage through file systems, disk scheduling, and access permissions. It manages I/O devices through device drivers, interrupts, and buffering to allow applications to communicate with hardware.
+
+Q5.What is difference b/w Kernel and OS
+The Operating System is a complete software package that provides an environment for users and applications to interact with hardware. It includes the kernel, device drivers, file systems, libraries, and utilities. The kernel is the core component of the OS that runs in Kernel Mode and is responsible for critical functions like process management, memory management, CPU scheduling, and hardware control.
+
+
+Q6.Why do we need Kernel Mode and User Mode? Explain the purpose behind having two modes
+
+User Mode and Kernel Mode are required to provide protection and security in a computer system. Applications run in User Mode with restricted privileges so they cannot directly access hardware or modify the memory of other processes. The OS kernel runs in Kernel Mode with privileged access to manage hardware resources and provide services through system calls. This separation provides process isolation, prevents system corruption, and improves overall system stability.
+
+
+Q7.Suppose Chrome is running in User Mode and wants to read a file from the SSD. Explain the complete flow from Chrome → Hardware.
+1. Chrome calls read("file.txt")
+        |
+        ↓
+2. System call switches CPU from User Mode → Kernel Mode
+        |
+        ↓
+3. Kernel checks permissions
+        |
+        ↓
+4. File system locates file blocks
+        |
+        ↓
+5. Device driver communicates with SSD
+        |
+        ↓
+6. SSD reads data
+        |
+        ↓
+7. SSD generates hardware interrupt
+        |
+        ↓
+8. CPU executes kernel interrupt handler
+        |
+        ↓
+9. Kernel copies data to Chrome memory
+        |
+        ↓
+10. Switch back Kernel Mode → User Mode
+
+
+Q8.)If the Kernel has unrestricted access, why can't one process access another process's memory?
+Although the kernel has unrestricted access to hardware and memory, it does not randomly access other processes' memory. The kernel follows OS protection policies and maintains process isolation using mechanisms like virtual memory and page tables. It accesses another process's memory only when required, such as during IPC, context switching, debugging, or shared memory operations.
+
+
+Q9.)Explain the difference between User Mode and Kernel Mode. Give examples of operations allowed in each mode.
+User Mode is a restricted execution mode where application programs run. Applications cannot directly access hardware and must request services from the OS through system calls. Kernel Mode is a privileged execution mode where the OS kernel runs with access to hardware, memory, and privileged instructions. It performs tasks like process management, memory management, CPU scheduling, and I/O handling.
+
+
+Q10.)
+Explain the evolution of Operating Systems:
+
+No OS
+Batch OS
+Time-Sharing OS
+Personal OS
+
+
+No OS
+↓
+Manual execution problem
+
+Batch OS
+↓
+Automation problem solved
+
+Time Sharing OS
+↓
+Multiple users + responsiveness solved
+
+Personal OS
+↓
+User-friendly computing solved
+
+
+
+Q11.)In Batch OS, why was CPU utilization still inefficient even though jobs were automated?
+In Batch OS, CPU utilization was still inefficient because jobs were executed sequentially. If the current job performed an I/O operation, the CPU had to wait until the I/O completed, causing CPU idle time. Since there was no mechanism to switch to another ready job during this waiting period, CPU resources were not fully utilized.
+
+
+Q12.)How does a Time-Sharing OS improve CPU utilization compared to a Batch OS?
+Time-sharing OS improves CPU utilization by dividing CPU time into small time slices and allowing multiple processes to share the CPU through rapid context switching. When one process waits for I/O, the CPU can execute another process instead of remaining idle. This increases CPU utilization and provides interactive access to multiple users.
+
+Q13.)What is a Kernel? Explain its role in an Operating System.
+A kernel is known as heart of the OS (part of OS). It directly involves in Memory Management, Process Management, CPU scheduling, Accessing Hardware, I/O Devices etc. It acts as an intermediary between Application program and hardware, receives system calls and gives access to services. It provides protection and resource control. Apart from Kernel OS contains Device drivers, File systems etc.
+
+Q14) Monolithic vs MicroKernel
+A Monolithic Kernel executes almost all operating system services, such as process management, memory management, file systems, networking, and device drivers inside the kernel space. This provides high performance due to reduced communication overhead but offers lower fault tolerance because a failure in one kernel component can affect the entire system. In contrast, a Microkernel keeps only essential services like process management, memory management, scheduling, and IPC in kernel space, while services like file systems and device drivers run in user space. This improves security and reliability at the cost of additional IPC overhead and slightly lower performance.
+
+Q15)What is meant by VM ?Explain?
+A Virtual Machine is a software-based emulation of a physical computer that allows an operating system to run in an isolated environment. A hypervisor acts as an intermediate layer between physical hardware and virtual machines, allocating virtual resources such as CPU, memory, storage, and network interfaces. Virtual machines allow multiple operating systems to run simultaneously on the same physical machine while maintaining isolation between them. If one VM crashes or is compromised, other VMs remain unaffected. Hypervisors are mainly classified into Type 1, which runs directly on hardware, and Type 2, which runs on a host operating system.
+
+Q16)What is a Process?
+A process is a program that is currently in execution. Unlike a program, which is a passive entity stored on disk, a process is an active entity managed by the operating system. Each process has its own address space containing the code segment, data segment, heap, and stack. The OS manages processes using a Process Control Block (PCB), which stores information such as process state, registers, memory details, and scheduling information.
+
+Q17)Explain different states of Process LifeCycle?
+A process goes through different states during its lifetime. When a process is created, it enters the New state, where the OS creates its PCB and prepares it for execution. After that, it moves to the Ready state and waits in the ready queue for CPU allocation. The CPU scheduler selects a process, and the dispatcher performs the context switch to move it into the Running state. If the process requires an I/O operation or waits for an event, it moves to the Waiting state. After the event completes, it returns to the Ready state. Once execution finishes, the process enters the Terminated state and the OS releases its resources. In preemptive scheduling, processes can move from Running back to Ready when the time quantum expires or a higher priority process arrives.
+
+Q18)What is a Process Control Block (PCB)? What information does it store, and why is it needed by the OS?
+A Process Control Block (PCB) is a data structure maintained by the Operating System for each process. It stores all the information required by the OS to manage and execute a process. During context switching, the current process state is saved into its PCB, and the next process information is loaded from its PCB. A PCB contains information such as Process ID, process state, program counter, CPU registers, scheduling information, memory management information, I/O status information, accounting information, and open files.
+
+
+
+Q19)What is Context Switching?
+Context switching is the mechanism by which the CPU switches from executing one process to another. It occurs when a process's time quantum expires, a higher priority process arrives, an interrupt occurs, or the process waits for I/O. During a context switch, the CPU switches to kernel mode, and the OS saves the current process context, including program counter, CPU registers, and process state, into its PCB. The CPU scheduler selects the next process from the ready queue, and the dispatcher restores the selected process's context from its PCB. Finally, execution resumes in user mode. Context switching allows multitasking but introduces overhead because CPU time is spent saving and restoring states.
+
+
+Q20)How are processes created in an Operating System? Explain the role of fork(), exec(), and wait()?
+A process is created when an application requests the operating system through a system call. The OS creates a PCB, assigns a Process ID, allocates resources, loads the program into memory, and places the process into the ready queue. The CPU scheduler selects the process and the dispatcher assigns the CPU.
+
+In Unix-based systems, process creation commonly uses fork(), exec(), and wait(). fork() creates a new child process from the parent process. exec() replaces the child process's memory space with a new program. wait() allows the parent process to wait for the child process completion and collect its exit status, preventing zombie processes.
+
+
+Q21)What happens when a process terminates? Explain zombie and orphan processes.
+Whenever a process is terminated it moves to Terminated state and memory allocated to it is cleared by OS through its parent process by knowing its exit status. During this if a process is terminated and still has space in process table as parent didn't collect the information of the child process it is known as a Zombie Process. Suppose if there is a parent-child relationship and parent dies before child then there is no parent to look after the child to store its information, then OS adopts and gives init as parent process. This leads to Orphan process.
+
+
+
+
+
+
