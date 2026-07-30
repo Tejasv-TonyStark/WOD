@@ -1,0 +1,213 @@
+Day3
+
+Q1)Why do we need CPU Scheduling in an Operating System?
+CPU scheduling is the mechanism used by the operating system to decide which process should get the CPU and for how long. Since multiple processes may be in the Ready state but the CPU can execute only one process at a time (per core), the OS requires a scheduling algorithm to allocate the CPU efficiently.
+
+The primary goal of CPU scheduling is to maximize CPU utilization by ensuring the CPU remains busy whenever possible. If a running process blocks for an I/O operation, instead of letting the CPU remain idle, the scheduler selects another ready process to execute. This improves overall system performance and supports multitasking.
+
+CPU scheduling also aims to improve important performance metrics such as throughput, turnaround time, waiting time, and response time, while ensuring fairness among processes.
+
+
+Q2)What is the difference between a CPU Scheduler and a Dispatcher?
+
+The CPU Scheduler is an operating system component that selects the next process to run from the Ready Queue according to the scheduling algorithm (such as FCFS, SJF, or Round Robin). It makes the scheduling decision but does not execute it.
+
+The Dispatcher is the component that implements the scheduler's decision. It performs the context switch by saving the state of the currently running process into its PCB, restoring the state of the selected process from its PCB, switching the CPU to user mode if required, and transferring control to the selected process.
+
+Q3)Explain the three types of schedulers in an Operating System:
+
+Long-Term Scheduler
+Short-Term Scheduler
+Medium-Term Scheduler
+
+An operating system uses three types of schedulers to manage processes efficiently.
+
+1. Long-Term Scheduler (Job Scheduler):
+
+Selects processes from the job pool on secondary storage (disk).
+Admits selected processes into main memory (RAM), moving them to the Ready Queue.
+Controls the degree of multiprogramming (the number of processes in memory).
+Invoked relatively infrequently.
+
+2. Short-Term Scheduler (CPU Scheduler):
+
+Selects one process from the Ready Queue in RAM.
+Allocates the CPU according to a scheduling algorithm such as FCFS, SJF, or Round Robin.
+Invoked very frequently, often every few milliseconds.
+
+3. Medium-Term Scheduler (Swapper):
+
+Temporarily removes (swaps out) suspended or inactive processes from RAM to secondary storage.
+Brings them back (swaps in) when memory becomes available.
+Helps prevent memory pressure and improves overall system performance.
+
+Q4)Explain hoe does a process get suspended?
+A process can become suspended when the OS decides to temporarily stop it and remove it from RAM (swap it to secondary storage). This is different from a process simply waiting for I/O
+
+Q5) What are the scheduling criteria used to evaluate CPU scheduling algorithms?
+The scheduling criteria used to evaluate CPU scheduling algorithms are:
+
+CPU Utilization – The percentage of time the CPU is busy executing processes. The objective is to maximize CPU utilization.
+Throughput – The number of processes completed per unit time. Higher throughput means more work is finished.
+Turnaround Time – The total time from a process's arrival until its completion.
+Formula: Completion Time − Arrival Time
+Waiting Time – The total time a process spends waiting in the Ready Queue before execution.
+Formula: Turnaround Time − Burst Time
+Response Time – The time from a process's arrival until it first receives the CPU.
+Formula: First CPU Start Time − Arrival Time
+
+Q6)Differnce between Premptive and non-Preemptive?
+| Non-Preemptive                    | Preemptive                      |
+| --------------------------------- | ------------------------------- |
+| CPU cannot be taken away forcibly | CPU can be taken away by the OS |
+| Fewer context switches            | More context switches           |
+| Lower overhead                    | Higher overhead                 |
+| Less responsive                   | More responsive                 |
+| FCFS, SJF                         | Round Robin, SRTF, Priority     |
+
+Q7)What is FCFS (First Come, First Served) Scheduling?
+FCFS (First Come, First Served) is the simplest CPU scheduling algorithm. Processes are executed in the order they arrive in the Ready Queue. The first process to enter the queue is the first to receive the CPU.
+
+FCFS is a Non-Preemptive scheduling algorithm, meaning once a process starts executing, it continues until it either completes or blocks for an I/O operation.
+
+Advantages:
+
+Very simple to implement.
+Fair in terms of arrival order.
+Low scheduling overhead.
+
+Disadvantages:
+
+Can result in large waiting times.
+Poor response time for short processes.
+Suffers from the Convoy Effect.
+
+Q8)What is SJF (Shortest Job First) Scheduling?
+Shortest Job First (SJF) is a CPU scheduling algorithm in which the process with the smallest CPU burst time is selected for execution first.
+
+It is typically a Non-Preemptive scheduling algorithm, meaning once a process starts executing, it continues until it completes or blocks for I/O.
+
+SJF provides the minimum average waiting time because short processes finish quickly, allowing more processes to complete sooner and reducing the overall waiting time.
+
+Advantages:
+
+Minimum average waiting time.
+Better turnaround time than FCFS.
+Efficient for workloads with many short processes.
+
+Disadvantages:
+
+Can cause starvation of long processes.
+The OS cannot know the exact CPU burst time in advance and must estimate it, making pure SJF difficult to implement in real systems.
+
+Q9)What is SRTF (Shortest Remaining Time First)?
+Shortest Remaining Time First (SRTF) is the preemptive version of Shortest Job First (SJF). The scheduler always selects the process with the smallest remaining CPU burst time.
+
+If a new process arrives whose remaining burst time is less than that of the currently running process, the operating system preempts the current process and allocates the CPU to the new process.
+
+Difference from SJF:
+
+SJF: Chooses the shortest burst time only when the CPU becomes free (Non-Preemptive).
+SRTF: Continuously checks arriving processes and can interrupt the running process if a shorter remaining job arrives (Preemptive).
+
+Advantages:
+
+Minimum average waiting time among preemptive algorithms.
+Better responsiveness for short jobs.
+
+Disadvantages:
+
+More context-switch overhead.
+Long processes may suffer from starvation.
+Requires estimating CPU burst times, which is difficult in practice.
+
+Q10)Round Robin (RR) is a preemptive CPU scheduling algorithm in which each process is allocated a fixed amount of CPU time called the Time Quantum (Time Slice).
+
+The Short-Term Scheduler selects the next process from the Ready Queue.
+
+If a process completes before its quantum expires, it releases the CPU and the next process is scheduled.
+
+If the quantum expires and the process has not finished, the operating system performs a context switch and moves that process to the end of the Ready Queue. The next process is then given the CPU.
+
+Advantages:
+
+Fair scheduling.
+No starvation.
+Good response time for interactive systems.
+
+Disadvantages:
+
+Higher context-switch overhead.
+Performance depends heavily on the choice of time quantum.
+
+
+Q11)Explain about Priority scheduling?
+Priority Scheduling is a CPU scheduling algorithm in which each process is assigned a priority. The scheduler always selects the process with the highest priority (or lowest priority number, depending on the system).
+
+It can be implemented as either:
+
+Preemptive: A newly arrived higher-priority process immediately preempts the running process.
+Non-Preemptive: The running process keeps the CPU until it completes or blocks.
+
+If two processes have the same priority, FCFS is usually used to decide which one runs first.
+
+Advantages:
+
+Important or time-critical processes are executed first.
+Suitable for real-time systems.
+
+Disadvantages:
+
+Low-priority processes may suffer from starvation.
+
+Starvation:
+
+A low-priority process may wait indefinitely if higher-priority processes keep arriving.
+
+Aging:
+
+Aging gradually increases the priority of waiting processes over time, ensuring they eventually receive the CPU and preventing starvation.
+
+
+Q12)What is Multilevel Queue?
+Multilevel Queue (MLQ) Scheduling divides the Ready Queue into multiple separate queues based on the characteristics of processes. For example, system processes, interactive processes, and batch processes may each have their own queue.
+
+Each queue has its own scheduling algorithm, and the queues themselves are assigned priorities. The CPU first selects the highest-priority non-empty queue, and then scheduling is performed within that queue.
+
+A process cannot move between queues after it has been assigned to one.
+
+Advantages:
+
+Different categories of processes receive scheduling policies suited to their needs.
+Better responsiveness for interactive and system processes.
+
+Disadvantages:
+
+Fixed queue assignment may not always be optimal.
+Lower-priority queues can suffer from starvation.
+More complex to design and manage.
+
+Q13) What is Multilevel Feedback Queue?
+Multilevel Feedback Queue (MLFQ) is an advanced CPU scheduling algorithm that divides the Ready Queue into multiple priority queues. Unlike Multilevel Queue Scheduling, processes are allowed to move between queues based on their CPU usage and behavior.
+
+New processes usually enter the highest-priority queue. If a process uses its entire time quantum, it is assumed to be CPU-bound and is moved to a lower-priority queue. If a process frequently yields the CPU or waits for I/O, it remains in a higher-priority queue. Processes that wait too long may also be promoted through aging (priority boosting) to prevent starvation.
+
+Advantages:
+
+Adapts dynamically to process behavior.
+Good response time for interactive processes.
+Reduces starvation.
+Suitable for mixed workloads.
+
+Disadvantages:
+
+Complex to implement.
+Choosing queue priorities and time quantum values is difficult.
+More context-switch overhead.
+
+
+
+
+
+
+
