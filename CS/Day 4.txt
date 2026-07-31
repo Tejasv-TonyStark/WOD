@@ -1,0 +1,186 @@
+Day 4
+Arrival Time (AT): Time at which a process enters the Ready Queue.
+CPU Start Time: Time at which the CPU starts executing the process for the first time.
+Completion Time (CT): Time at which the process finishes execution.
+Turnaround Time (TAT): Total time spent in the system (Arrival → Completion).
+Waiting Time (WT): Total time spent waiting in the Ready Queue.
+Response Time (RT): Time from Arrival until the process gets CPU access for the first time.
+
+Q1)What is a Race Condition?
+A race condition occurs when multiple threads/processes access and modify shared data concurrently, and the final result depends on the order in which they execute.
+
+
+Q2)Explain critical section and Mutual Exclusion?
+A critical section is the part of the code that accesses shared data/resources.
+
+Because it accesses shared data, only one thread/process should be allowed to execute that section at a time.
+
+Notice the difference:
+
+Critical Section → The code.
+Mutual Exclusion → The rule that only one thread may execute that code at a time.
+
+A critical section is the part of a program that accesses shared resources (such as shared variables, memory, or files). Since multiple threads/processes can access the same resource, only one thread/process should execute the critical section at a time to avoid race conditions. This property is called mutual exclusion
+
+
+Q3)What is a critical section Problem?
+The Critical Section Problem is the problem of designing a protocol that allows multiple processes/threads to safely access shared resources without causing race conditions, while satisfying the required synchronization conditions.
+
+
+Q4)The Three Conditions for the Critical section Problem?
+    • Mutual Exclusion
+    • Progress
+    • Bounded Waiting
+
+Q5)Why do we need Mutual exclusion?
+Mutual Exclusion ensures that only one process or thread executes the critical section at a time. Since the critical section accesses shared resources, allowing multiple threads to execute it simultaneously can cause race conditions and produce inconsistent results.
+
+Q6)Suppose:
+
+Thread A is in its remainder section (it is not trying to enter the critical section).
+Thread B wants to enter the critical section.
+Question:
+
+Should Thread A have any say in whether Thread B is allowed to enter the critical section? Why or why not?
+
+If a process is not interested in entering the critical section (it is in the remainder section), it should not participate in deciding which process gets to enter the critical section. Only the processes that want to enter the critical section should make that decision.
+
+Progress
+
+Definition:
+
+If no process is in the critical section and some processes want to enter, then one of the waiting processes must be selected within a finite time. The decision should involve only the processes that wish to enter.
+
+Q7)What is Bounded Waiting?
+Bounded Waiting ensures that every process requesting the critical section will eventually get access. It places a limit on how many times other processes can enter the critical section before the waiting process is allowed to enter, thereby preventing starvation.
+
+
+
+Q8)Explain Peterson?
+Peterson's Algorithm is a software-based synchronization algorithm designed to solve the Critical Section Problem for two processes. It ensures that when two processes attempt to access a shared resource simultaneously, only one process enters the critical section at a time, thereby preventing race conditions.
+
+The algorithm guarantees all three requirements of the Critical Section Problem:
+
+Mutual Exclusion – Only one process can execute the critical section at any time.
+Progress – If no process is inside the critical section, the decision of who enters next is made only by the processes that wish to enter.
+Bounded Waiting – Every process that requests the critical section will eventually be allowed to enter, preventing starvation.
+
+Unlike hardware-based synchronization techniques, Peterson's Algorithm is a pure software solution, requiring no special CPU instructions.
+
+
+Code :
+Process 0
+do {
+
+    flag[0] = true;      // P0 wants to enter Critical Section
+    turn = 1;            // Give preference to P1
+
+    while(flag[1] && turn == 1);
+
+    /* Critical Section */
+
+    flag[0] = false;     // Leave Critical Section
+
+    /* Remainder Section */
+
+} while(true);
+
+Process P1
+do {
+
+    flag[1] = true;      // P1 wants to enter Critical Section
+    turn = 0;            // Give preference to P0
+
+    while(flag[0] && turn == 0);
+
+    /* Critical Section */
+
+    flag[1] = false;     // Leave Critical Section
+
+    /* Remainder Section */
+
+} while(true);
+
+
+
+Advantages
+Simple and easy to understand.
+Pure software solution; no special hardware support required.
+Guarantees Mutual Exclusion, Progress, and Bounded Waiting.
+Excellent for understanding synchronization concepts and interview discussions.
+
+Limitations
+Works only for two processes.
+Uses busy waiting (spin waiting), where a waiting process continuously checks a condition and wastes CPU cycles.
+Assumes atomic read/write operations.
+Assumes sequential memory consistency.
+Not suitable for modern multicore processors because hardware optimizations such as caching and memory reordering can violate the assumptions on which the algorithm depends.
+
+Peterson's Algorithm is a software-based synchronization algorithm for two processes that solves the Critical Section Problem using two shared variables: flag[], which indicates whether a process wants to enter the critical section, and turn, which resolves conflicts when both processes compete simultaneously. By making one process wait while the other executes, it guarantees Mutual Exclusion, Progress, and Bounded Waiting. Although elegant and widely taught, it is not used in modern operating systems because it supports only two processes and relies on assumptions that do not hold on modern multicore hardware.
+
+
+Q9)What is Problem with Peterson Problem?
+Peterson's Algorithm is theoretically correct but impractical for modern systems. It supports only two processes, uses busy waiting, and relies on immediate memory visibility and ordered execution, which are not guaranteed on modern multicore processors. Hence, operating systems use hardware atomic instructions such as Test-and-Set and Compare-and-Swap for synchronization instead.
+
+
+Q10)Processes run concurrently. If both processes call the Test-and-Set instruction simultaneously, why doesn't the race condition occur? Doesn't concurrency mean both instructions execute at the same time? Also, explain the Test-and-Set instruction
+
+Concurrency means multiple threads or processes execute simultaneously (or appear to execute simultaneously) on one or more CPU cores. However, atomicity means a specific instruction executes as one indivisible operation that cannot be interrupted or interleaved.
+
+The Test-and-Set instruction is a hardware-supported atomic instruction used to implement mutual exclusion. It performs two operations as a single indivisible step:
+
+Reads the current value of the lock.
+Sets the lock to true.
+
+Because these two actions are performed atomically, no other processor or thread can access the lock variable in between.
+
+Although multiple processes may concurrently invoke Test-and-Set(lock), the hardware serializes access to the shared lock variable. Only one processor can execute the atomic operation on that memory location at a time.
+
+
+Q11)Test-and-Set Code
+
+// Atomic hardware instruction
+boolean TestAndSet(boolean *lock) {
+    boolean old = *lock;  // Save old value
+    *lock = true;         // Acquire lock
+    return old;           // Return previous value
+}
+
+Using Test-and-Set for Mutual Exclusion
+boolean lock = false;
+
+while (TestAndSet(&lock))
+    ;   // Busy wait (Spin)
+
+
+// -------- Critical Section --------
+
+
+// Release the lock
+lock = false;
+
+
+
+
+Test-and-Set is a hardware-supported atomic instruction used for synchronization.
+It atomically reads the old value of the lock and sets it to true, preventing race conditions.
+It returns the old value so the process knows whether it successfully acquired the lock.
+The first process that receives false enters the critical section; all others receive true and wait.
+Concurrency still exists, but Test-and-Set serializes access only to the shared lock variable, ensuring mutual exclusion.
+
+
+
+Q12)Give Brief Intro on CSP(Compare and Swap)?
+
+Test-and-Set only sets a lock atomically, whereas Compare-and-Swap atomically checks whether a variable has an expected value and updates it only if the comparison succeeds. This makes CAS much more flexible for implementing lock-free algorithms and safely updating shared data.
+
+Only one CAS operation succeeds because it atomically compares and updates the variable. Once the first thread updates x, the expected value no longer matches for the second thread, causing its CAS operation to fail.
+
+
+
+Q13)What does CSP return?
+CAS atomically compares a variable with an expected value and updates it only if they match. It commonly returns a boolean indicating whether the swap succeeded, although some implementations return the previous value instead.
+
+
+
+
