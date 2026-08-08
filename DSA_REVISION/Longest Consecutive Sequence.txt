@@ -1,0 +1,46 @@
+## 1. Longest Consecutive Sequence
+
+**Pattern:** HashSet + Start/Boundary Detection
+
+**Recognition:**
+Unsorted + Consecutive + “Does value exist?” + Need O(n)
+
+**Trigger Thought:**
+Fast existence check → HashSet
+Avoid repeated sequence traversal → Find START first
+
+**Key Observation:**
+`x - 1` absent → `x` is START
+Then keep checking `current_num + 1`
+
+**Logic:**
+Array → Set → Find starts → Expand forward → Track max
+
+**Code Skeleton:**
+
+```python
+s = set(nums)
+longest = 0
+
+for x in s:
+    if x - 1 not in s:
+        curr = x
+        length = 1
+
+        while curr + 1 in s:
+            curr += 1
+            length += 1
+
+        longest = max(longest, length)
+
+return longest
+```
+
+**Complexity:** O(n) average | O(n) space
+
+**My Main Mistake:**
+Used fixed `x` while expanding.
+`x` = start, `curr` = moving number.
+
+**STRIKE LINE:**
+🔥 **Consecutive + Unsorted + Existence Check → HashSet → Find `x-1` absent → Expand `x+1`.**
