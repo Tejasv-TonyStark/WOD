@@ -1,0 +1,36 @@
+## 2. Move Zeroes
+
+**Pattern:** Two Pointers / In-Place Write Pointer
+
+**Recognition:**
+
+* Modify array in-place
+* Preserve relative order
+* Move/remove certain elements
+* Separate valid vs unwanted elements
+* Need O(1) extra space
+
+**Trigger Thought:**
+One pointer scans → another pointer tracks next valid position.
+
+**Invariant:**
+Everything before `x` is already correctly filled with non-zero elements in original order.
+
+**Core Logic:**
+
+```python
+x = 0
+
+for i in range(len(nums)):
+    if nums[i] != 0:
+        nums[x] = nums[i]
+        x += 1
+
+for i in range(x, len(nums)):
+    nums[i] = 0
+```
+
+**Complexity:** O(n) time | O(1) space
+
+**STRIKE LINE:**
+**In-place + preserve order + filter/move elements → Scan Pointer + Write Pointer.**
