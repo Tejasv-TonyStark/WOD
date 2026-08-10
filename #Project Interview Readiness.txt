@@ -51,6 +51,8 @@ Q9)Orchestartor working?
 The orchestrator combines intent, complexity and retrieval requirements into an execution strategy such as fast, reasoning, fast+RAG or reasoning+RAG. It does not directly select the model.
 
 
+whole project arcbhitectire learnt
+
 
 
 
