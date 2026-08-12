@@ -34,3 +34,5 @@ for i in range(x, len(nums)):
 
 **STRIKE LINE:**
 **In-place + preserve order + filter/move elements → Scan Pointer + Write Pointer.**
+
+we will do from tmrw
