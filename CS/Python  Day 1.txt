@@ -1,0 +1,98 @@
+Python : Day 1
+
+1)What is Python?
+
+Python is a high-level, general-purpose, dynamically typed programming language. It supports multiple programming paradigms such as object-oriented, procedural, and functional programming. Python is commonly called an interpreted language, although in CPython the source code is first compiled into bytecode and then executed by the Python Virtual Machine.
+
+2)You said Python is an interpreted language. Does Python have a compiler? Explain exactly how a Python program gets executed.
+
+Python is commonly called an interpreted language. If we consider CPython, which is the standard implementation of Python, the source code is first compiled into bytecode. This bytecode is then executed by the Python Virtual Machine/runtime. Therefore, CPython involves both compilation and interpretation.
+
+
+3)What is Cpython?
+
+CPython is the standard and most widely used implementation of the Python programming language. It is primarily written in C and compiles Python source code to bytecode, which is then executed by the CPython interpreter.
+
+4)What is Dynamically Typed?
+
+Python is dynamically typed because types are determined at runtime, and a variable name can be rebound to objects of different types without an explicit type declaration. The type belongs to the object, not the variable name itself.
+
+5)
+x = 10
+y = "20"
+
+print(x + y)
+
+Shows a Type error
+
+6)What is difference bw Dynamically typed and strongly Typed?
+Dynamic typing means Python determines and checks types at runtime, and a variable name can reference objects of different types. Strong typing means Python generally doesn't implicitly convert incompatible types, so operations like adding an integer and a string raise a TypeError.
+
+
+7)a = 10
+b = a
+
+print(id(a))
+print(id(b))
+
+changing a doesn't change it creates a new object
+
+8)Mutable vs Immutable Objects?
+Immutable object: its state/content cannot be modified after creation. An apparent “change” generally means creating/reusing another object and rebinding the name.
+
+ex : Lists are mutable. Since a and b reference the same list object, modifying that object through a is also visible through b.
+
+9)a = [10, 20]
+b = a
+
+a = [10, 20, 30]
+print(b)
+
+In the first case, append() mutates the existing list object, so because a and b reference the same object, both observe [10, 20, 30]. In the second case, a = [10, 20, 30] creates a new list object and rebinds a to it. b continues referencing the original [10, 20] list.
+
+
+10)Why does Python even have immutable objects? What are the advantages of immutability?
+
+Immutability means an object's state cannot be changed after creation. It improves predictability and makes objects safer to share. Immutable objects are also often hashable, which allows types such as strings, integers, and suitable tuples to be used as dictionary keys or set elements.
+
+
+11)x = ([1, 2], 10)
+
+x[0].append(3)
+
+print(x)
+
+Tuple immutability means its element references cannot be replaced after creation. It does NOT mean that mutable objects contained inside the tuple become immutable.
+
+it is gonna return ([1,2,3],10)
+
+Famous Interview trap
+
+
+Note : A tuple is immutable, so the references stored in the tuple cannot be replaced. However, if one of those references points to a mutable object such as a list, that list itself can still be modified.”
+
+
+
+12)a = [1, 2]
+b = a
+
+a = a + [3]
+
+print(a)
+print(b)
+
+[1,2,3]  : new list is created it is not gonna be modified
+second one is [1,2]
+
+if we write a+=3 then we are gonna get the same answer because += is mutable
+
+
+
+13)
+
+
+
+
+
+
+
