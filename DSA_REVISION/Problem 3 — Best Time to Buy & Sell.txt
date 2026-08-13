@@ -1,0 +1,33 @@
+Problem 3 — Best Time to Buy & Sell Stock
+
+Pattern: Greedy + Running Minimum
+
+Recognition:
+
+One buy + one sell
+Buy must happen before sell
+Maximum difference with ordering constraint
+For current element, need best value from the left/past
+
+Core idea:
+
+min_price = cheapest price seen so far
+profit_today = current_price - min_price
+max_profit = best profit seen so far
+
+Code:
+
+min_price = prices[0]
+max_profit = 0
+
+for i in range(1, len(prices)):
+    min_price = min(min_price, prices[i])
+    max_profit = max(max_profit, prices[i] - min_price)
+
+return max_profit
+
+Complexity: O(n) time | O(1) space
+
+Strike line:
+
+Need best difference where smaller value must come earlier → scan left-to-right → maintain minimum-so-far + maximum answer-so-far.
