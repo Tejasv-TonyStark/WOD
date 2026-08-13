@@ -1,0 +1,34 @@
+Time: O(n) average, because each element is processed once and hashmap lookup is O(1) average.
+Space: O(n), because in the worst case we store up to n values.
+Problem 5 — Two Sum
+
+Pattern: HashMap + Complement Lookup
+
+Recognition:
+
+Need two elements whose sum equals target
+Need indices
+Repeated question: “Have I already seen target - x?”
+
+Core idea:
+
+hashmap = {}
+
+for i in range(len(nums)):
+    req = target - nums[i]
+
+    if req in hashmap:
+        return [hashmap[req], i]
+
+    hashmap[nums[i]] = i
+
+Strike line:
+
+Pair sum + need indices + fast previous lookup → HashMap → complement = target - current.
+
+Important distinction:
+
+HashSet → only need existence
+HashMap → need existence plus associated information, here the index
+
+This one should start striking faster now because it connects directly to the HashSet reasoning from Longest Consecutive Sequence.
