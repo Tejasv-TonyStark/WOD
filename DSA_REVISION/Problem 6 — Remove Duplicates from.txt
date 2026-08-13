@@ -1,0 +1,44 @@
+Problem 6 — Remove Duplicates from Sorted Array
+
+Pattern: Two Pointers / Write Pointer
+
+Recognition:
+
+Array is sorted
+Remove duplicates in-place
+Preserve order
+Need O(1) extra space
+
+Core Idea:
+
+i = index of last unique element
+j = scanner
+If arr[j] == arr[i] → duplicate → skip
+If arr[j] != arr[i] → new unique element → move i and copy
+def removeDuplicates(arr):
+    if not arr:
+        return 0
+
+    i = 0
+
+    for j in range(1, len(arr)):
+        if arr[j] != arr[i]:
+            i += 1
+            arr[i] = arr[j]
+
+    return i + 1
+
+Invariant:
+
+arr[0:i+1] always contains all unique elements found so far in correct order.
+
+Why i + 1?
+i is an index. If i = 4, unique elements occupy indices 0...4 → 5 elements.
+
+Complexity: O(n) time | O(1) space
+
+Strike Line
+
+Sorted + Remove Duplicates + In-place → Two Pointers → compare scanner with last unique → different means write forward.
+
+Connection: Same family as Move Zeroes: scanner finds wanted elements, write pointer places them correctly.
