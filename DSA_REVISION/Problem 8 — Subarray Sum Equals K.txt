@@ -1,0 +1,64 @@
+Problem 8 — Subarray Sum Equals K
+
+Pattern: Prefix Sum + HashMap Frequency
+
+Recognition:
+
+Contiguous subarray
+Sum equals K
+Negative numbers may exist
+Need to count how many subarrays
+
+Core equation:
+
+current_prefix - previous_prefix = k
+
+
+⇒ previous_prefix = current_prefix - k
+
+So at every position:
+
+req = prefix_sum - k
+
+If req appeared before, we found valid subarrays.
+
+Code:
+
+def subarraySum(nums, k):
+    prefix_sum = 0
+    count = 0
+    prefix_count = {0: 1}
+
+
+    for num in nums:
+        prefix_sum += num
+        req = prefix_sum - k
+
+
+        if req in prefix_count:
+            count += prefix_count[req]
+
+
+        prefix_count[prefix_sum] = prefix_count.get(prefix_sum, 0) + 1
+
+
+    return count
+
+Meaning of variables:
+
+prefix_sum → running sum so far
+req → previous prefix sum we need
+prefix_count → prefix_sum : frequency
+count → total valid subarrays
+
+Why {0:1}?
+
+Empty prefix before the array has sum 0 once.
+
+This lets us count subarrays starting from index 0.
+
+Complexity: O(n) time | O(n) space
+
+Strike line:
+
+Contiguous Subarray Sum = K + negatives possible → Prefix Sum + HashMap Frequency → search for prefix_sum - k.
