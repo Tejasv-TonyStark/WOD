@@ -1,0 +1,48 @@
+Problem 7 — Product of Array Except Self
+
+Pattern: Prefix Product + Suffix Product
+
+Recognition:
+
+Need product of all elements except current
+Division not allowed
+Need information from both left and right
+
+Core idea:
+
+answer[i] = product before i × product after i
+left[i] = left[i - 1] * nums[i - 1]
+right[i] = right[i + 1] * nums[i + 1]
+
+Code:
+
+def productExceptSelf(nums):
+    n = len(nums)
+
+
+    left = [1] * n
+    right = [1] * n
+    ans = [1] * n
+
+
+    for i in range(1, n):
+        left[i] = left[i - 1] * nums[i - 1]
+
+
+    for i in range(n - 2, -1, -1):
+        right[i] = right[i + 1] * nums[i + 1]
+
+
+    for i in range(n):
+        ans[i] = left[i] * right[i]
+
+
+    return ans
+
+Complexity: O(n) time | O(n) extra space
+
+Main mistake: loop variable mismatch (j loop but using i).
+
+Strike line:
+
+Everything except current + no division → Prefix Product × Suffix Product.
