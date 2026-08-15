@@ -62,3 +62,6 @@ Complexity: O(n) time | O(n) space
 Strike line:
 
 Contiguous Subarray Sum = K + negatives possible → Prefix Sum + HashMap Frequency → search for prefix_sum - k.
+
+
+We will do it tmrqw
