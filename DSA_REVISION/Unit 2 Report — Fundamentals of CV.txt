@@ -1,0 +1,233 @@
+Unit 2 Report — Fundamentals of CV for Medical Image Processing
+1. Image Registration
+Definition
+
+Image registration is the process of geometrically aligning two or more images so that corresponding anatomical structures match at the same location.
+
+Workflow
+
+Reference/Fixed Image + Moving Image → Find correspondence → Apply transformation → Align → Registered Image
+
+Important Transformations
+Translation — moves the image.
+Rotation — rotates the image.
+Scaling — changes image size.
+Deformation — changes image shape.
+Medical Applications
+CT–MRI alignment
+PET–CT alignment
+Comparing scans taken at different times
+Monitoring tumor growth
+Surgical planning
+Key Point
+
+Registration = Alignment of images.
+
+2. Feature Extraction
+
+Feature extraction identifies important characteristics from an image, such as edges, shapes, texture, and other structures.
+
+Two important techniques are Edge Detection and Hough Transform.
+
+2.1 Edge Detection
+Definition
+
+Edge detection identifies object boundaries by detecting significant changes in pixel intensity.
+
+For example:
+
+Normal tissue → sudden intensity change → Tumor
+
+The intensity change can indicate a boundary.
+
+Important Operators
+Sobel
+Prewitt
+Canny
+Canny Edge Detection
+
+Canny is commonly used because it:
+
+Reduces the effect of noise.
+Produces relatively thin and clear edges.
+Helps identify accurate boundaries.
+Medical Applications
+Tumor boundary detection
+Organ boundary detection
+Bone boundaries
+Blood vessel detection
+Key Point
+
+Edge Detection = Find boundaries using intensity changes.
+
+2.2 Hough Transform
+Definition
+
+Hough Transform is a feature-extraction technique used to identify geometric shapes such as lines and circles from detected edge points.
+
+Workflow
+
+Image → Edge Detection → Edge Points → Hough Transform → Detect Line/Circle
+
+Important Difference
+Edge Detection	Hough Transform
+Finds boundary/edge points	Detects geometric shapes
+Detects intensity changes	Groups evidence for lines/circles
+Example: Canny	Example: Line/Circle Hough Transform
+Medical Applications
+Detecting approximately circular structures
+Detecting linear structures
+Assisting analysis of bones and vessels where geometric models are appropriate
+Key Point
+
+Edge Detection = Boundary; Hough Transform = Geometric Shape.
+
+3. Filtering
+Definition
+
+Filtering modifies pixel values to remove unwanted noise or enhance important image features.
+
+There are two major purposes:
+
+Filtering → Noise Removal + Image Enhancement
+
+3.1 Noise Removal
+
+Noise refers to unwanted variations in an image.
+
+Important Filters
+Filter	Purpose
+Mean Filter	General smoothing using average
+Median Filter	Excellent for salt-and-pepper noise
+Gaussian Filter	Smoothing / reducing Gaussian noise
+Most Important Exam Point
+
+Salt-and-pepper noise → Median Filter
+
+Median filtering is effective because extreme noisy values are less influential when the median of neighboring pixels is selected.
+
+3.2 Image Enhancement
+Definition
+
+Image enhancement improves image quality or makes important structures easier to visualize and analyze.
+
+It can improve:
+
+Contrast
+Brightness
+Sharpness
+Visibility of structures
+Example
+
+Low-contrast MRI → Contrast Enhancement → Abnormal region becomes easier to distinguish
+
+Key Point
+
+Noise Removal = Remove unwanted information
+Enhancement = Make useful information clearer
+
+4. Image Segmentation
+Definition
+
+Image segmentation is the process of dividing an image into meaningful regions based on characteristics such as intensity, texture, or boundaries.
+
+Workflow
+
+Medical Image → Segmentation → Separate regions → Analyze required region
+
+For tumor segmentation:
+
+MRI → Segment → Tumor isolated → Measure location/shape/area/volume
+
+A simple binary segmentation mask can represent:
+
+Tumor = 1
+Non-tumor = 0
+
+Common Methods
+Thresholding
+Region growing
+Edge-based segmentation
+Clustering
+Deep-learning methods
+U-Net vs ResNet
+
+U-Net is a major architecture specifically associated with medical image segmentation.
+
+ResNet is commonly used as a feature extractor/backbone and can also serve as the encoder within a segmentation architecture.
+
+Medical Applications
+Tumor segmentation
+Organ segmentation
+Lesion segmentation
+Blood vessel segmentation
+Measuring tumor volume
+Surgical planning
+Key Point
+
+Segmentation = Divide an image into meaningful regions.
+
+5. Domain Transformation
+Definition
+
+Domain transformation converts an image from one representation into another to facilitate image processing and analysis.
+
+The important transformation here is:
+
+Spatial Domain → Frequency Domain
+
+Spatial Domain
+
+Works directly with:
+
+Pixel positions
+Pixel intensity values
+Frequency Domain
+
+Represents the image according to its frequency components.
+
+Generally:
+
+Frequency	Represents
+Low Frequency	Smooth/slowly changing regions
+High Frequency	Edges, fine details and rapid changes; some noise may also be high-frequency
+Fourier Transform
+
+The Fourier Transform converts:
+
+Spatial Domain → Frequency Domain
+
+The Inverse Fourier Transform converts:
+
+Frequency Domain → Spatial Domain
+
+Complete Workflow
+
+Image → Fourier Transform → Frequency Domain → Processing/Filtering → Inverse Fourier Transform → Processed Image
+
+Applications
+Noise reduction
+Smoothing
+Sharpening
+Image enhancement
+Key Point
+
+Fourier Transform = Spatial → Frequency
+Inverse Fourier Transform = Frequency → Spatial
+
+Final Unit 2 Revision Table
+Topic	Definition/Purpose	Remember
+Registration	Align two or more images	Alignment
+Feature Extraction	Extract useful image characteristics	Features
+Edge Detection	Detect significant intensity changes	Boundary
+Hough Transform	Detect lines/circles from edge evidence	Shape
+Filtering	Remove noise or improve image	Clean/Enhance
+Median Filter	Removes salt-and-pepper noise	Salt & Pepper
+Segmentation	Divide image into meaningful regions	Separation
+U-Net	Deep-learning architecture for segmentation	Segmentation
+ResNet	Common feature extractor/backbone	Features
+Fourier Transform	Spatial → Frequency	Transform
+Inverse Fourier Transform	Frequency → Spatial	Return
+One-line revision
+
+Registration aligns → Edge detection finds boundaries → Hough finds shapes → Filtering cleans/enhances → Segmentation separates regions → Fourier Transform converts spatial to frequency domain.
