@@ -1,0 +1,275 @@
+UNIT 1 — ADDITIVE MANUFACTURING RAPID REVISION
+
+Headings, Side Headings & Important Keywords
+
+Q1. Additive Manufacturing vs Subtractive Manufacturing
+
+Side Headings
+
+1.  Definition
+2.  Principle
+3.  Complex Geometry
+4.  Material Wastage
+5.  Customization
+6.  Surface Finish
+7.  Cutting Tools
+8.  Internal Features
+9.  Accuracy
+
+Important Keywords
+
+AM: - Add material - Layer-by-layer - Less waste - Complex geometry
+easier - High customization - Rougher as-built surface - Cutting tool
+generally not required - Internal features easier
+
+SM: - Remove material - Bulk workpiece - More waste / chips - Complex
+geometry limited by tool accessibility - Lower customization compared
+with AM - Better surface finish - Cutting tools required - Internal
+features may be difficult
+
+Memory: AM = ADD → COMPLEX → LESS WASTE SM = REMOVE → TOOL ACCESS → MORE
+WASTE
+
+Q2. Additive Manufacturing Workflow
+
+Side Headings — In Order
+
+1.  CAD Model
+2.  STL Conversion
+3.  STL Validation / Error Checking
+4.  Build Orientation
+5.  Support Generation
+6.  Slicing
+7.  Process Parameters + Machine Setup
+8.  Layer-by-Layer Building
+9.  Post-processing
+
+Important Keywords
+
+-   CAD = 3D digital design
+-   STL = conversion of CAD geometry for AM
+-   Validation = check STL errors
+-   Orientation = position/direction of component
+-   Supports = temporary supporting structures
+-   Slicing = 3D model → individual layers
+-   Parameters = layer thickness, speed, temperature/energy settings
+-   Building = fabricate layer-by-layer
+-   Post-processing = support removal, cleaning, polishing/surface
+    finishing, heat treatment/machining if required
+
+Memory: DESIGN → CONVERT → CHECK → ORIENT → SUPPORT → SLICE → SET →
+BUILD → FINISH
+
+Q3. STL File and STL Errors
+
+STL — Important Keywords
+
+-   3D CAD model
+-   Surface representation
+-   Triangular facets
+-   Each facet = 3 vertices + surface normal
+-   Tessellation
+-   Watertight / closed mesh
+
+Common STL Errors
+
+1.  Holes / Gaps
+    -   Open or missing regions in mesh
+2.  Non-manifold Edges
+    -   Invalid facet/edge connectivity
+3.  Self-intersection
+    -   Mesh surfaces improperly cross each other
+4.  Inverted Normals
+    -   Surface normal points in wrong direction
+5.  Duplicate Triangles
+    -   Same triangular facet repeated
+6.  Degenerate Triangles
+    -   Zero or nearly-zero area triangle
+
+Memory: HOLES → NON-MANIFOLD → SELF-INTERSECTION → INVERTED NORMALS →
+DUPLICATE → DEGENERATE
+
+Q4. Basic AM Terminology
+
+Important Terms
+
+1.  CAD
+    -   Digital 3D design / representation
+2.  STL
+    -   Triangular surface representation of a 3D model
+3.  Tessellation
+    -   Approximation of geometry using facets
+4.  Facet
+    -   Individual triangle representing a surface
+5.  Slicing
+    -   Conversion of 3D geometry into layer information
+6.  Toolpath
+    -   Planned path followed by nozzle / deposition source / energy
+        source
+7.  Build Orientation
+    -   Direction or position selected for manufacturing
+8.  Support Structure
+    -   Temporary structure used to support/anchor the component
+9.  Overhang
+    -   Geometry extending beyond underlying support
+10. Build Volume
+
+-   Available region/volume in which a machine can manufacture a part
+
+11. DfAM
+
+-   Design for Additive Manufacturing
+
+12. Lattice Structure
+
+-   Periodic cellular structure
+
+Main Chain: CAD → STL → TESSELLATION → FACET → SLICING → TOOLPATH
+
+Q5. Tolerances in Additive Manufacturing
+
+1. Definition
+
+Tolerance = permissible variation from a specified nominal dimension.
+
+Example: 20.00 ± 0.05 mm Acceptable range = 19.95 mm to 20.05 mm
+
+2. Importance of Tolerances
+
+Final AM dimensions can be affected by: - Layer thickness - Thermal
+shrinkage - Thermal expansion - Residual stress - Printing conditions -
+Machine calibration - Support removal - Post-processing
+
+3. Types of Tolerances
+
+A. Dimensional Tolerance
+
+Keyword: SIZE - Controls size of a feature - Example: D = 10.00 ± 0.05
+mm
+
+B. Geometric Tolerance
+
+Keyword: SHAPE - Controls geometric form Examples: - Straightness -
+Flatness - Circularity - Cylindricity
+
+C. Positional Tolerance
+
+Keyword: LOCATION - Controls location of a feature - Example: centre of
+hole within ±0.1 mm of nominal position
+
+D. Orientation Tolerance
+
+Keyword: DIRECTION Examples: - Parallelism - Perpendicularity -
+Angularity
+
+E. Surface Texture Requirement
+
+Keyword: ROUGHNESS - Controls surface roughness - Example: Ra < 2 μm
+
+Memory: SIZE → SHAPE → LOCATION → DIRECTION → ROUGHNESS
+
+Q6. Design for Additive Manufacturing (DfAM)
+
+Definition Keywords
+
+-   Design
+-   AM capabilities
+-   AM constraints
+
+DfAM = designing a component while considering the capabilities and
+limitations of additive manufacturing.
+
+A. Part Consolidation
+
+Keywords: MULTIPLE PARTS → REDESIGN → ONE INTEGRATED COMPONENT
+
+-   Multiple separately manufactured/assembled components are redesigned
+    as one integrated AM component.
+-   The single component performs the functions of the original
+    assembled parts.
+
+Memory: MANY → ONE
+
+B. Topology Optimization
+
+Keywords: CAD DESIGN → OPTIMAL MATERIAL DISTRIBUTION → REQUIRED
+PERFORMANCE
+
+-   Determines where material is actually required in the design.
+-   Unnecessary material is eliminated/redesigned digitally before
+    manufacturing.
+-   Can reduce mass while maintaining required stiffness/strength.
+
+Important: This is DESIGN optimization, not physical subtractive
+machining.
+
+Memory: HEAVY DESIGN → OPTIMIZED MATERIAL DISTRIBUTION
+
+C. Lightweighting
+
+Keywords: LESS MATERIAL → LOWER WEIGHT
+
+Strategies: - Topology optimization - Lattice structures - Cellular
+structures - Thin-wall structures - Internal voids - Hollow structures
+
+D. Build Orientation
+
+Keyword: HOW IS THE PART PLACED?
+
+Possible orientations: - Vertical - Horizontal - Tilted
+
+Build orientation can affect: - Support volume - Surface roughness -
+Build time - Residual stress - Dimensional accuracy - Mechanical
+anisotropy
+
+DfAM Recall: CONSOLIDATE → OPTIMIZE → LIGHTWEIGHT → ORIENT
+
+Q7. Overhangs, Support Structures and Lattice Structures
+
+A. Overhang
+
+Keywords: - Geometry extending beyond underlying support - Hanging /
+outward-extending geometry - May require support
+
+Memory: OVERHANG → MAY NEED SUPPORT
+
+B. Support Structure
+
+Keywords: - Temporary AM structure - Supports regions that cannot be
+reliably manufactured without additional material - Usually removed
+after printing
+
+Purposes: 1. Geometric Support - Prevents unsupported regions from
+collapsing
+
+2.  Thermal Support
+    -   Helps conduct heat away, especially in metal AM
+3.  Mechanical Anchoring
+    -   Holds / anchors the component during fabrication
+
+Memory: HOLD SHAPE → REMOVE HEAT → ANCHOR
+
+C. Lattice Structure
+
+Keywords: - Periodic cellular structure - Repeating interconnected
+cells - Less material - Lightweight design
+
+Memory: REPEATING CELLS → LESS MATERIAL → LIGHTWEIGHT
+
+COMPLETE UNIT 1 RECALL CHAIN
+
+Q1: AM vs SM → ADD vs REMOVE → Complexity → Waste → Customization →
+Finish → Tools → Internal Features → Accuracy
+
+Q2: AM Workflow → CAD → STL → CHECK → ORIENT → SUPPORT → SLICE → SET →
+BUILD → FINISH
+
+Q3: STL → Triangular Facets → 3 Vertices + Normal → STL Errors
+
+Q4: Terminology → CAD → STL → Tessellation → Facet → Slicing → Toolpath
+
+Q5: Tolerances → SIZE → SHAPE → LOCATION → DIRECTION → ROUGHNESS
+
+Q6: DfAM → MANY→ONE → OPTIMIZE → LIGHTWEIGHT → ORIENT
+
+Q7: → OVERHANG → SUPPORT → LATTICE
