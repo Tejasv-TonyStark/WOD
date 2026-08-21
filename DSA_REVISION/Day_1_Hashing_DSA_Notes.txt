@@ -1,0 +1,460 @@
+DAY 1 — HASHING FOUNDATIONS
+Amazon Data Engineer DSA Preparation
+
+==================================================
+1. CONTAINS DUPLICATE
+Pattern:
+- Have I seen this value before?
+- Use a HashSet.
+
+Code:
+def contains_duplicate(nums):
+    seen = set()
+
+    for x in nums:
+        if x in seen:
+            return True
+        seen.add(x)
+
+    return False
+
+Time Complexity: O(n) average
+Space Complexity: O(n)
+
+Key Idea:
+HashSet membership check is O(1) average.
+
+
+==================================================
+2. TWO SUM
+Pattern:
+- Have I seen the required complement before?
+- Need original index, so use HashMap.
+- value -> index
+
+Code:
+def two_sum(nums, target):
+    seen = {}
+
+    for i in range(len(nums)):
+        x = target - nums[i]
+
+        if x in seen:
+            return [seen[x], i]
+
+        seen[nums[i]] = i
+
+    return [-1, -1]
+
+Time Complexity: O(n) average
+Space Complexity: O(n)
+
+Key Idea:
+needed = target - current_number
+
+
+==================================================
+3. VALID ANAGRAM
+Pattern:
+- Frequency counting.
+- character -> frequency
+
+Code:
+def is_anagram(S, T):
+    if len(S) != len(T):
+        return False
+
+    freq = {}
+
+    for ch in S:
+        if ch in freq:
+            freq[ch] += 1
+        else:
+            freq[ch] = 1
+
+    for ch in T:
+        if ch in freq:
+            freq[ch] -= 1
+        else:
+            return False
+
+    for key, value in freq.items():
+        if value != 0:
+            return False
+
+    return True
+
+Time Complexity: O(n)
+Space Complexity: O(k)
+
+Important Python Shortcut:
+freq[x] = freq.get(x, 0) + 1
+
+Meaning:
+- If x exists, take its current frequency and add 1.
+- If x does not exist, use 0 and add 1.
+
+
+==================================================
+4. INTERSECTION OF TWO ARRAYS
+Pattern:
+- Existence checking.
+- Need unique common elements.
+- Use HashSet.
+
+Code:
+def intersection(nums1, nums2):
+    A = set(nums1)
+    result = set()
+
+    for x in nums2:
+        if x in A:
+            result.add(x)
+
+    return list(result)
+
+Time Complexity: O(n + m)
+Space Complexity: O(n + k)
+
+Key Idea:
+Does this value exist in the other collection?
+
+
+==================================================
+5. MAJORITY ELEMENT
+Pattern:
+- Frequency counting.
+- Return when frequency > n // 2.
+
+Method 1:
+def majority_element(nums):
+    freq = {}
+    n = len(nums)
+
+    for x in nums:
+        if x in freq:
+            freq[x] += 1
+        else:
+            freq[x] = 1
+
+        if freq[x] > n // 2:
+            return x
+
+Method 2 using get():
+def majority_element(nums):
+    freq = {}
+    n = len(nums)
+
+    for x in nums:
+        freq[x] = freq.get(x, 0) + 1
+
+        if freq[x] > n // 2:
+            return x
+
+Time Complexity: O(n)
+Space Complexity: O(n)
+
+
+==================================================
+6. GROUP ANAGRAMS
+Pattern:
+- Group items using a common HashMap key.
+- sorted_word -> list of original words
+
+Sorting-Based Method:
+def group_anagrams(strs):
+    groups = {}
+
+    for word in strs:
+        key = ''.join(sorted(word))
+
+        if key not in groups:
+            groups[key] = []
+
+        groups[key].append(word)
+
+    return list(groups.values())
+
+Example:
+"eat" -> "aet"
+"tea" -> "aet"
+"ate" -> "aet"
+
+So:
+"aet" -> ["eat", "tea", "ate"]
+
+Time Complexity:
+O(n * k log k)
+where:
+n = number of words
+k = average/max word length
+
+Space Complexity: O(nk)
+
+MARKED FOR REVISION:
+Method 2 — Frequency-array key approach.
+We intentionally postponed this until hashing feels more natural.
+
+
+==================================================
+7. TOP K FREQUENT ELEMENTS
+Pattern:
+- Build frequency map.
+- Sort by frequency.
+- Return first k elements.
+
+Code:
+def top_k_frequent(nums, k):
+    freq = {}
+
+    for x in nums:
+        if x in freq:
+            freq[x] += 1
+        else:
+            freq[x] = 1
+
+    L = []
+
+    for number, frequency in freq.items():
+        L.append([number, frequency])
+
+    L.sort(key=lambda x: x[1], reverse=True)
+
+    result = []
+
+    for i in range(k):
+        result.append(L[i][0])
+
+    return result
+
+Important Sorting Syntax:
+L.sort(key=lambda x: x[1], reverse=True)
+
+Meaning:
+- Sort each pair using its second element.
+- reverse=True means descending order.
+
+Time Complexity:
+O(n + m log m)
+Worst case: O(n log n)
+
+Space Complexity: O(m)
+
+MARKED FOR REVISION:
+Method 2 — Bucket Sort O(n) approach.
+
+
+==================================================
+8. LONGEST CONSECUTIVE SEQUENCE
+Pattern:
+- Fast existence checking using HashSet.
+- A number starts a sequence only if x - 1 does NOT exist.
+
+Code:
+def longest_consecutive(nums):
+    max_len = 0
+    nums_set = set(nums)
+
+    for x in nums_set:
+        if x - 1 not in nums_set:
+            curr_num = x
+            curr_len = 1
+
+            while curr_num + 1 in nums_set:
+                curr_num += 1
+                curr_len += 1
+
+            max_len = max(max_len, curr_len)
+
+    return max_len
+
+Time Complexity: O(n) average
+Space Complexity: O(n)
+
+Key Idea:
+Only expand from TRUE sequence starts.
+
+Example:
+nums = [100, 4, 200, 1, 3, 2]
+
+Valid starts:
+100
+200
+1
+
+Sequence from 1:
+1 -> 2 -> 3 -> 4
+Length = 4
+
+
+==================================================
+9. SUBARRAY SUM EQUALS K
+Pattern:
+- Prefix Sum + HashMap Frequency.
+- This is like Two Sum applied to prefix sums.
+
+Core Formula:
+current_prefix - previous_prefix = target
+
+Therefore:
+previous_prefix = current_prefix - target
+
+Code:
+def subarray_sum(nums, target):
+    prefix_sum = 0
+    count = 0
+
+    # Prefix sum 0 has appeared once before reading any element.
+    freq = {0: 1}
+
+    for x in nums:
+        prefix_sum += x
+
+        needed = prefix_sum - target
+
+        if needed in freq:
+            count += freq[needed]
+
+        if prefix_sum in freq:
+            freq[prefix_sum] += 1
+        else:
+            freq[prefix_sum] = 1
+
+    return count
+
+Time Complexity: O(n) average
+Space Complexity: O(n)
+
+Why freq = {0: 1}?
+It allows us to correctly count valid subarrays that start from index 0.
+
+Example:
+nums = [3]
+target = 3
+
+prefix_sum = 3
+needed = 3 - 3 = 0
+
+freq[0] = 1
+So [3] is counted as one valid subarray.
+
+
+==================================================
+10. FIRST UNIQUE CHARACTER IN A STRING
+Pattern:
+- Frequency counting.
+- Find the first character whose frequency == 1.
+
+Code:
+def first_unique_char(s):
+    freq = {}
+
+    for ch in s:
+        if ch in freq:
+            freq[ch] += 1
+        else:
+            freq[ch] = 1
+
+    for i in range(len(s)):
+        if freq[s[i]] == 1:
+            return i
+
+    return -1
+
+Time Complexity: O(n)
+Space Complexity: O(k)
+
+
+==================================================
+TODAY'S HASHING PATTERN SUMMARY
+
+1. Need to know:
+   "Have I seen this value before?"
+   -> HashSet
+
+2. Need:
+   "Have I seen this value AND where?"
+   -> HashMap
+   value -> index
+
+3. Need:
+   "How many times has this appeared?"
+   -> Frequency HashMap
+   value -> count
+
+4. Need:
+   "Group items that share one property."
+   -> HashMap
+   property/key -> list of items
+
+5. Need:
+   "Does this value exist in another collection?"
+   -> HashSet
+
+6. Need:
+   "Have I seen the required complement?"
+   -> HashMap
+
+7. Need:
+   "Have I seen the required previous prefix sum?"
+   -> Prefix Sum + HashMap Frequency
+
+
+==================================================
+MARKED TOPICS TO REVISIT AFTER CORE HASHING
+
+1. Group Anagrams
+   - Frequency-array key method
+   - Avoid sorting
+   - Target complexity: O(n * k)
+
+2. Top K Frequent Elements
+   - Bucket Sort method
+   - Target complexity: O(n)
+
+3. Hashing Complexity Deep Dive
+   - Why HashSet/HashMap lookup is O(1) average
+   - Why worst case can become O(n)
+   - Hash collisions
+   - Building a set/map
+   - Sorting effects
+   - String hashing problem complexities
+
+
+==================================================
+REVISION RULE
+
+Do not treat these as 10 isolated problems.
+
+Connections:
+Contains Duplicate
+    -> HashSet existence
+
+Two Sum
+    -> existence + stored index
+
+Valid Anagram
+    -> frequency map
+
+Intersection
+    -> set existence + uniqueness
+
+Majority Element
+    -> frequency + threshold
+
+Group Anagrams
+    -> common property used as HashMap key
+
+Top K Frequent
+    -> frequency map + ranking
+
+Longest Consecutive
+    -> HashSet existence + sequence-start trick
+
+Subarray Sum Equals K
+    -> Two Sum idea applied to prefix sums
+
+First Unique Character
+    -> frequency map + first count of 1
+
+END OF DAY 1 NOTES
