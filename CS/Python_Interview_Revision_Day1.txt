@@ -1,0 +1,702 @@
+PYTHON INTERVIEW PREPARATION — REVISION NOTES Amazon Data Engineer
+Preparation
+
+================================================== 1. PYTHON — CORE IDEA
+==================================================
+
+Python is a high-level, general-purpose, dynamically typed, strongly
+typed programming language. It supports multiple programming paradigms
+such as: - Object-Oriented Programming - Procedural Programming -
+Functional Programming
+
+High-level: Python is closer to application/problem logic and abstracts
+most low-level hardware details.
+
+CPython execution: Source Code (.py) ↓ CPython Compiler ↓ Bytecode ↓
+Python Virtual Machine (PVM) ↓ Execution
+
+Important: - Source code is compiled to bytecode. - Bytecode is
+interpreted/executed by the Python Virtual Machine.
+
+================================================== 2. DYNAMIC TYPING
+==================================================
+
+Python variables do not have a permanently declared datatype. Names are
+bound to objects, and the objects have types.
+
+Example:
+
+x = 10 x = “Amazon”
+
+The same name x can be rebound to objects of different types.
+
+================================================== 3. STRONG TYPING
+==================================================
+
+Python does not freely perform operations between incompatible types.
+
+Example:
+
+10 + “20”
+
+raises TypeError.
+
+Correct:
+
+10 + int(“20”)
+
+================================================== 4. OBJECTS,
+REFERENCES AND IDENTITY
+==================================================
+
+Example:
+
+x = 10
+
+Think:
+
+x —-> integer object 10
+
+A variable/name refers to an object.
+
+Identity: Identity means which exact object something is.
+
+id(x)
+
+can be used to inspect an object’s identity during its lifetime.
+
+================================================== 5. MUTABLE VS
+IMMUTABLE ==================================================
+
+Mutable: The contents/state of an existing object can be changed.
+
+Common mutable types: - list - dict - set - bytearray
+
+Example:
+
+a = [10, 20, 30] a[0] = 100
+
+The same list object is modified.
+
+Immutable: The object itself cannot be modified after creation.
+
+Common immutable types: - int - float - bool - str - tuple - bytes -
+frozenset
+
+Example:
+
+x = “Tejasv”
+
+x[0] = “G”
+
+raises TypeError because strings are immutable.
+
+But:
+
+x = x[0] + “G”
+
+produces “TG” and rebinds x to the new string object. It does NOT modify
+the original “Tejasv” string.
+
+Tuple interview trap:
+
+x = ([1, 2], 10) x[0].append(3)
+
+Result:
+
+([1, 2, 3], 10)
+
+The tuple still refers to the same list object. The list inside the
+tuple is mutable and can be changed.
+
+================================================== 6. REFERENCES AND OLD
+OBJECTS ==================================================
+
+Example:
+
+x = “Tejasv” x = “TG”
+
+If no reference remains to the old object, it becomes unreachable.
+
+In CPython, reference counting is a major part of memory management.
+When an object’s reference count reaches zero, it can normally be
+deallocated immediately.
+
+Example:
+
+x = “Tejasv” y = x x = “TG”
+
+Now:
+
+x —-> “TG” y —-> “Tejasv”
+
+The old string is still referenced by y.
+
+================================================== 7. TYPE CONVERSION
+==================================================
+
+Explicit conversion:
+
+x = “100” y = int(x)
+
+Other examples:
+
+float(“3.14”) str(100) list((1, 2)) tuple([1, 2]) set([1, 1, 2])
+
+Implicit conversion:
+
+x = 10 y = 2.5 z = x + y
+
+z becomes 12.5 (float).
+
+Python can perform compatible numeric conversions automatically.
+
+But:
+
+10 + “20”
+
+does not work automatically.
+
+================================================== 8. OPERATORS
+==================================================
+
+Arithmetic:
+
+-   addition
+-   subtraction
+-   multiplication / true division // floor division % modulus **
+    exponentiation
+
+Example:
+
+10 / 3 # 3.333…
+
+10 // 3 # 3
+
+Important:
+
+-10 // 3 # -4
+
+because // performs floor division.
+
+Comparison:
+
+== != > < >= <=
+
+Logical:
+
+and or not
+
+Python uses short-circuit evaluation.
+
+Membership:
+
+in not in
+
+Identity:
+
+is is not
+
+Important distinction:
+
+== -> value equality is -> object identity
+
+Example:
+
+a = [1, 2] b = [1, 2]
+
+a == b # True
+
+a is b # False
+
+================================================== 9. CONTROL FLOW
+==================================================
+
+if / elif / else:
+
+age = 20
+
+if age >= 18: print(“Eligible”) elif age >= 16: print(“Almost eligible”)
+else: print(“Not eligible”)
+
+Truthy and Falsy:
+
+Common falsy values:
+
+False None 0 0.0 “” [] () {} set()
+
+Example:
+
+data = []
+
+if data: print(“Data available”) else: print(“No data”)
+
+for loop:
+
+for x in [1, 2, 3]: print(x)
+
+range:
+
+range(start, stop, step)
+
+Example:
+
+range(2, 10, 2) # represents 2, 4, 6, 8
+
+while:
+
+x = 3
+
+while x > 0: print(x) x -= 1
+
+break: Terminates the loop.
+
+continue: Skips the current iteration.
+
+pass: Does nothing; useful as a placeholder.
+
+================================================== 10. FUNCTIONS
+==================================================
+
+Example:
+
+def add(a, b): return a + b
+
+result = add(10, 20)
+
+Parameters: Variables appearing in the function definition.
+
+Arguments: Actual values supplied during a function call.
+
+return vs print:
+
+print() displays a value.
+
+return sends a value back to the caller.
+
+A function with no explicit return returns None.
+
+POSITIONAL ARGUMENTS:
+
+def employee(name, age): print(name, age)
+
+employee(“Tejasv”, 21)
+
+KEYWORD ARGUMENTS:
+
+employee(age=21, name=“Tejasv”)
+
+DEFAULT ARGUMENTS:
+
+def connect(database=“postgres”): print(database)
+
+connect() # postgres
+
+connect(“mysql”) # mysql
+
+================================================== 11. *args AND
+**kwargs ==================================================
+
+*args: Arbitrary positional arguments. Collected into a tuple.
+
+Example:
+
+def total(*args): print(args)
+
+total(10, 20, 30)
+
+(10, 20, 30)
+
+**kwargs: Arbitrary keyword arguments. Collected into a dictionary.
+
+Example:
+
+def employee(**kwargs): print(kwargs)
+
+employee(name=“Tejasv”, role=“Data Engineer”)
+
+{“name”: “Tejasv”, “role”: “Data Engineer”}
+
+Recall:
+
+*args → positional → tuple
+
+**kwargs → keyword → dictionary
+
+================================================== 12. PANDAS read_csv —
+ARGUMENT EXAMPLE ==================================================
+
+import pandas as pd
+
+df = pd.read_csv( “data.csv”, delimiter=“,”, encoding=“utf-8” )
+
+“data.csv” is a positional argument.
+
+delimiter=“,” and encoding=“utf-8” are keyword arguments.
+
+pd.read_csv() reads CSV data into a Pandas DataFrame.
+
+Typical Data Engineering idea:
+
+CSV ↓ read_csv() ↓ DataFrame ↓ Clean ↓ Transform ↓ Validate ↓ Database /
+S3 / Data Warehouse
+
+================================================== 13. SCOPE AND LEGB
+==================================================
+
+Scope determines where a name can be accessed.
+
+LEGB:
+
+L -> Local E -> Enclosing G -> Global B -> Built-in
+
+Python searches names in that order.
+
+Local:
+
+def test(): x = 10
+
+Enclosing:
+
+def outer(): x = 10
+
+    def inner():
+        print(x)
+
+Global:
+
+x = 100
+
+def test(): print(x)
+
+Built-in:
+
+print() len() sum() int()
+
+================================================== 14. global
+==================================================
+
+x = 100
+
+def change(): global x x = 200
+
+change() print(x)
+
+200
+
+global tells Python to use/rebind the module-level name.
+
+================================================== 15. nonlocal
+==================================================
+
+def outer(): x = 10
+
+    def inner():
+        nonlocal x
+        x = 20
+
+    inner()
+    print(x)
+
+outer()
+
+20
+
+nonlocal refers to a name in the nearest enclosing function scope.
+
+Recall:
+
+global -> module/global scope nonlocal -> nearest enclosing function
+scope
+
+================================================== 16. HOW PYTHON PASSES
+FUNCTION ARGUMENTS ==================================================
+
+A useful description: Python uses object sharing / pass-by-assignment.
+
+Example with immutable object:
+
+def modify(x): x = 20
+
+a = 10 modify(a)
+
+print(a) # 10
+
+Rebinding local x does not rebind a.
+
+Example with mutable object:
+
+def modify(data): data.append(30)
+
+numbers = [10, 20] modify(numbers)
+
+print(numbers) # [10, 20, 30]
+
+The parameter and caller initially reference the same list. append()
+mutates that shared object.
+
+Important:
+
+data.append(30) → mutation
+
+data = [100, 200] → local reassignment/rebinding
+
+================================================== 17. MUTABLE DEFAULT
+ARGUMENT TRAP ==================================================
+
+Problematic:
+
+def add_item(item, items=[]): items.append(item) return items
+
+print(add_item(“A”)) # [“A”]
+
+print(add_item(“B”)) # [“A”, “B”]
+
+Why?
+
+Default argument values are evaluated once when the function is defined.
+The same mutable list is reused across calls.
+
+Preferred pattern:
+
+def add_item(item, items=None): if items is None: items = []
+
+    items.append(item)
+    return items
+
+================================================== 18. LAMBDA FUNCTIONS
+==================================================
+
+Lambda = small anonymous function.
+
+Syntax:
+
+lambda arguments: expression
+
+Example:
+
+lambda a, b: a * b
+
+Stored:
+
+multiply = lambda a, b: a * b
+
+multiply(4, 5) # 20
+
+Practical sorting example:
+
+employees = [ (“A”, 50000), (“B”, 30000), (“C”, 70000)]
+
+employees.sort(key=lambda x: x[1])
+
+================================================== 19. map()
+==================================================
+
+map() transforms elements.
+
+Example:
+
+numbers = [1, 2, 3, 4]
+
+result = list(map(lambda x: x * 10, numbers))
+
+[10, 20, 30, 40]
+
+In Python 3, map() returns an iterator, so list() is commonly used when
+a list is required.
+
+================================================== 20. filter()
+==================================================
+
+filter() selects elements satisfying a condition.
+
+numbers = [10, 15, 20, 25, 30]
+
+result = list(filter(lambda x: x > 20, numbers))
+
+[25, 30]
+
+Recall:
+
+map() -> TRANSFORM filter() -> SELECT
+
+================================================== 21. LIST
+COMPREHENSION ==================================================
+
+General:
+
+[expression for item in iterable]
+
+Example:
+
+numbers = [1, 2, 3, 4]
+
+squares = [x * x for x in numbers]
+
+With condition:
+
+numbers = [10, 15, 20, 25, 30]
+
+result = [x for x in numbers if x > 20]
+
+[25, 30]
+
+Transformation + condition:
+
+numbers = [1, 2, 3, 4, 5, 6]
+
+result = [x * x for x in numbers if x % 2 == 0]
+
+[4, 16, 36]
+
+================================================== 22. DICTIONARY
+COMPREHENSION ==================================================
+
+names = [“Amazon”, “AWS”, “Python”]
+
+result = {x: len(x) for x in names}
+
+{
+
+“Amazon”: 6,
+
+“AWS”: 3,
+
+“Python”: 6
+
+}
+
+================================================== 23. LIST OF
+DICTIONARIES — PRACTICAL PATTERN
+==================================================
+
+employees = [ {“name”: “A”, “salary”: 40000}, {“name”: “B”, “salary”:
+60000}, {“name”: “C”, “salary”: 75000}]
+
+result = [ emp[“name”] for emp in employees if emp[“salary”] > 50000]
+
+[“B”, “C”]
+
+Another example:
+
+records = [ {“id”: 1, “status”: “valid”}, {“id”: 2, “status”:
+“invalid”}, {“id”: 3, “status”: “valid”}]
+
+result = [ rec[“id”] for rec in records if rec[“status”] == “valid”]
+
+[1, 3]
+
+================================================== 24. COMBINING
+filter() AND map() ==================================================
+
+Pattern:
+
+list( map( transformation, filter(condition, iterable) ) )
+
+Think:
+
+DATA ↓ filter() -> WHICH items? ↓ map() -> WHAT transformation? ↓ list()
+
+Example:
+
+numbers = [1, 2, 3, 4, 5, 6]
+
+result = list( map( lambda x: x * x, filter(lambda x: x % 2 == 0,
+numbers) ) )
+
+[4, 16, 36]
+
+Practice example:
+
+numbers = [5, 10, 15, 20, 25, 30]
+
+result = list( map( lambda x: x * 2, filter(lambda x: x > 15, numbers) )
+)
+
+[40, 50, 60]
+
+Final practice:
+
+numbers = [3, 6, 9, 12, 15, 18]
+
+result = list( map( lambda x: x + 5, filter(lambda x: x % 3 == 0 and x >
+10, numbers) ) )
+
+[17, 20, 23]
+
+Equivalent comprehension:
+
+result = [x + 5 for x in numbers if x % 3 == 0 and x > 10]
+
+================================================== 25. ERROR TRACKER
+==================================================
+
+1.  TypeError Incompatible/inappropriate type or invalid function
+    argument usage.
+
+    Example: 10 + “20”
+
+    Example: x = “Tejasv” x[0] = “G”
+
+2.  ValueError Type may be acceptable, but the value is inappropriate.
+
+    Example: int(“Amazon”)
+
+3.  ZeroDivisionError Division/modulo by zero.
+
+    Example: 10 / 0
+
+4.  IndentationError Incorrect Python indentation.
+
+5.  SyntaxError Invalid Python syntax.
+
+    Example idea: A required positional parameter incorrectly placed
+    after a default parameter:
+
+    def test(a=10, b): pass
+
+================================================== QUICK INTERVIEW
+RECALL ==================================================
+
+Dynamic typing: Names can be rebound to objects of different types.
+
+Strong typing: Python does not automatically allow incompatible-type
+operations.
+
+Mutable: Same object’s contents can change.
+
+Immutable: Object itself cannot be modified.
+
+==: Value equality.
+
+is: Object identity.
+
+LEGB: Local -> Enclosing -> Global -> Built-in.
+
+global: Use/rebind a module-level name.
+
+nonlocal: Use/rebind a name from the nearest enclosing function scope.
+
+*args: Arbitrary positional arguments -> tuple.
+
+**kwargs: Arbitrary keyword arguments -> dictionary.
+
+map(): Transform.
+
+filter(): Select.
+
+lambda: Small anonymous function.
+
+Mutation: Change existing object’s state.
+
+Reassignment: Bind a name to another object.
+
+Mutable default argument: Avoid [] or {} as defaults when you intend
+fresh state per call; commonly use None and create the object inside.
+
+================================================== NEXT TOPIC
+==================================================
+
+Modules -> Packages -> Imports -> name == “main”
+
+Then continue deeper Python interview preparation.
