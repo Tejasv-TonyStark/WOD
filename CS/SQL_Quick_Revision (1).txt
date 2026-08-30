@@ -1,0 +1,138 @@
+SQL Interview Prep - Quick Revision List
+
+1.  SQL Basics
+
+-   SELECT, FROM
+-   WHERE
+-   DISTINCT
+-   ORDER BY
+-   LIMIT
+-   AND, OR, NOT
+-   IN, BETWEEN
+-   LIKE
+-   IS NULL, IS NOT NULL
+-   CASE WHEN
+-   COALESCE
+
+2.  Aggregate Functions
+
+-   COUNT(*)
+-   COUNT(column)
+-   COUNT(DISTINCT column)
+-   SUM
+-   AVG
+-   MIN
+-   MAX
+-   GROUP BY
+-   HAVING
+-   WHERE vs HAVING
+
+3.  Joins
+
+-   INNER JOIN
+-   LEFT JOIN
+-   RIGHT JOIN
+-   FULL OUTER JOIN
+-   SELF JOIN
+
+4.  Subqueries and CTEs
+
+-   Scalar subquery
+-   Correlated subquery
+-   CTE (WITH)
+-   EXISTS
+-   NOT EXISTS
+
+5.  Combining Results
+
+-   UNION
+-   UNION ALL
+
+6.  Window Functions
+
+-   ROW_NUMBER()
+-   RANK()
+-   DENSE_RANK()
+-   LAG()
+-   LEAD()
+-   SUM() OVER()
+-   AVG() OVER()
+-   COUNT() OVER()
+-   PARTITION BY
+-   ORDER BY inside OVER()
+
+7.  Window Function Patterns
+
+-   Running total
+-   Running average
+-   Rolling sum
+-   Rolling average
+-   ROWS BETWEEN … PRECEDING AND CURRENT ROW
+-   Month-over-month comparison
+-   Month-over-month growth %
+-   Day-over-day comparison
+-   Previous/next event comparison
+
+8.  Date and Sequence Patterns
+
+-   Date functions
+-   Extract year/month/day
+-   Date difference
+-   Current date
+-   Daily/weekly/monthly aggregation
+-   Consecutive dates
+-   Login streaks
+-   Gaps between events
+
+9.  Important Interview Patterns
+
+-   Second highest salary
+-   Nth highest salary
+-   Top-N per group
+-   Latest record per user/customer
+-   First record per user/customer
+-   Find duplicates
+-   Remove duplicates
+-   Employee vs department average
+-   Customers with more than N orders
+-   Highest-selling product
+-   Top products per category
+-   Revenue per customer/product/category
+-   Join + Aggregate
+-   Aggregate + Rank
+-   CTE + Window Function
+-   Subquery + Aggregate
+
+10. String and NULL Handling
+
+-   LOWER()
+-   UPPER()
+-   TRIM()
+-   SUBSTRING()
+-   CONCAT()
+-   NULL handling in calculations
+-   CASE-based aggregation
+
+11. Important Comparisons
+
+-   GROUP BY vs PARTITION BY
+-   ROW_NUMBER vs RANK vs DENSE_RANK
+-   UNION vs UNION ALL
+-   JOIN vs Subquery
+-   CTE vs Subquery
+-   Filtering before vs after aggregation
+
+12. Login Streak Pattern
+
+-   ROW_NUMBER() per user ordered by login_date
+-   Create shifted-date key: login_date - rn * INTERVAL ‘1 DAY’
+-   GROUP BY user_id and shifted-date key
+-   COUNT(*) = streak length
+-   MAX(streak_length) = longest streak
+
+REMAINING TO FINISH TODAY 1. SQL execution order 2. Query optimization
+and index basics 3. Top-N per group / latest record / Nth highest
+consolidation
+
+Final Goal: Finish the remaining three areas, then stop learning new SQL
+concepts and move to mixed interview problem solving / PS.
